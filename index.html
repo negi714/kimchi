@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kimchi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <audio id="xyz" src="others/okapeople.mp3" preload="auto"></audio>
+  <div class="container">
+    <canvas id="display_image" role="button" aria-label="AA"></canvas>
+  </div>
+  <div class="instructionTxt">
+    <div>
+      Select upload above to upload an image. Only JPG/PNGs are supported.
+      Made by @KimchiZhang on X.
+    </div>
+    <div class="instructionRow2">YJSNPI</div>
+  </div>
+  <div class="menu">
+    <div class="box">
+      <div class="buttonTxt">Display EXIF info:</div>
+      <input type="radio" name="displayExif" id="option-1" value="on" checked>
+      <input type="radio" name="displayExif" id="option-2" value="off">
+
+      <label for="option-1" class="option-1" checked>
+        <div class="text">Show</div>
+      </label>
+      <label for="option-2" class="option-2">
+        <div class="text">Hide</div>
+      </label>
+      <div class="dummylabel"></div>
+    </div>
+    <div class="box">
+      Display Logo:
+      <input type="radio" name="displayLogo" id="option-3" value="on" checked>
+      <input type="radio" name="displayLogo" id="option-4" value="off">
+
+      <label for="option-3" class="option-3">
+        <div class="text">Show</div>
+      </label>
+      <label for="option-4" class="option-4">
+        <div class="text">Hide</div>
+      </label>
+      <div class="dummylabel"></div>
+    </div>
+    <div class="box">
+      <div class="buttonTxt">Display Time:</div>
+      <input type="radio" name="displayTime" id="option-5" value="on">
+      <input type="radio" name="displayTime" id="option-6" value="off" checked>
+
+      <label for="option-5" class="option-5">
+        <div class="text">Show</div>
+      </label>
+      <label for="option-6" class="option-6">
+        <div class="text">Hide</div>
+      </label>
+      <div class="dummylabel"></div>
+    </div>
+    <div class="box">
+      <div class="buttonTxt">Add Username:</div>
+      <input type="radio" name="displayName" id="option-7" value="on">
+      <input type="radio" name="displayName" id="option-8" value="off" checked>
+
+      <input type="text" id="fname" placeholder="@Username">
+      <label for="option-7" class="option-7">
+        <div class="text">Show</div>
+      </label>
+      <label for="option-8" class="option-8">
+        <div class="text">Hide</div>
+      </label>
+    </div>
+  </div>
+  <div class="download-menu"><br><br>
+    <div class="voxy">
+      <img src="" class="tapImage">
+    </div>
+    Press & hold the image above to save to Camera Roll
+  </div>
+  <header class="header" style="top: 0;">
+    <label for="image_input" class="file-label">Upload</label>
+    <input type="file" id="image_input" accept="image/png, image/jpg, image/jpeg" style="display: none;">
+    <label for="download" class="download-label">Download</label>
+    <input id="download" style="display: none;">
+  </header>
+  <footer id="footer" style="bottom: 0;">
+    <label for="edit" class="edit-label">Edit</label>
+    <input id="edit" type="checkbox" style="display: none;">
+    aaaa
+  </footer>
+  <link rel="preload" href="fonts/sf-pro-text_regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="fonts/SF-Pro-Display-Medium.otf" as="font" type="font/otf" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

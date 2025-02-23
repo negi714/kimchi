@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXIF Image Editor</title>
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      background-color: #f4f4f4;
+      font-family: 'sfpro';
+      padding: 0 1rem;
+
+    }
+    header, footer {
+      position: fixed;
+      width: 100%;
+      max-height: 20vh;
+      padding: 0.9vh 0;
+      background: #1abc9c;
+      color: white;
+      font-size: 40px;
+      overflow: hidden;
+    }
+    header {top: 0;}
+    footer {bottom: 0;}
+    #display_image {
+      background-position: center;
+      border: 1px solid black;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .file-label {
+      display: inline-block;
+      padding: 10px 20px;
+      background: white;
+      color: #1abc9c;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+    }
+    .file-label:hover {
+      background: #16a085;
+      color: white;
+    }
+    #display_image {
+      display: block;
+    }
+    #container {
+      display: flex;
+      flex-grow: 1;
+      flex-shrink: 0;
+      align-items: center;
+    }
+    @font-face {
+      font-family: "sfpro";
+      src: url("fonts/sf-pro-text_regular.woff2");
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <label for="image_input" class="file-label">Upload Image</label>
+    <input type="file" id="image_input" accept="image/png, image/jpg" style="display: none;">
+    aaaa
+  </header>
+  <div id="container">
+    <h3 class="unko"></h3>
+    <canvas id="display_image" role="button" aria-label="AA"></canvas>
+  </div>
+  <footer>
+    <button id="download">Download</button>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
+
+
+
+const image_input = document.querySelector("#image_input");
+var uploaded_image = "";
+let img = new Image(); // Declare img globally to use for both display and download
+
+const displayImageCanvas = document.getElementById("display_image");
+//displayImageCanvas.width = window.innerWidth;
+//displayImageCanvas.height = Math.max(window.innerHeight * 0.8, 300);
+const ctx = displayImageCanvas.getContext('2d');
+const imageInput = document.getElementById('image_input');
+const downloadButton = document.getElementById('download');
+
+const MAX_CANVAS_WIDTH = 1000;  // Maximum width for display (e.g., 2000px)
+const MAX_CANVAS_HEIGHT = 1000; // Maximum height for display (e.g., 1500px)
+
+imageInput.addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      uploaded_image = reader.result;
+      //Display the img
+      document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+    });
+    img.onload = () => {
+      // Calculate aspect ratio
+      const aspectRatio = img.width / img.height;
+
+      // Calculate the new canvas size based on the max width and height
+      let newWidth = img.width;
+      let newHeight = img.height;
+
+  if (img.width > MAX_CANVAS_WIDTH || img.height > MAX_CANVAS_HEIGHT) {
+    if (aspectRatio > 1) {
+      // Landscape image: Scale width and calculate height
+      newWidth = MAX_CANVAS_WIDTH;
+      newHeight = newWidth / aspectRatio;
+    } else {
+      // Portrait image: Scale height and calculate width
+      newHeight = MAX_CANVAS_HEIGHT;
+      newWidth = newHeight * aspectRatio;
+    }
+  }
+
+// Set the display canvas size
+displayImageCanvas.width = newWidth;
+displayImageCanvas.height = newHeight;
+
+      
+  // Draw the image on the resized canvas
+  ctx.clearRect(0, 0, displayImageCanvas.width, displayImageCanvas.height);
+  ctx.drawImage(img, 0, 0, displayImageCanvas.width, displayImageCanvas.height);
+
+      ctx.drawImage(img,0,0,displayImageCanvas.width, displayImageCanvas.height);
+      ctx.font = "50px serif";
+      ctx.fillStyle = "white";
+      ctx.fillText("hello world", 50, displayImageCanvas.height - 50);
+    };
+    img.src = URL.createObjectURL(file);
+  }
+});
+
+downloadButton.addEventListener("click", () => {
+  const link = document.createElement("a");
+
+  // Create a hidden canvas with the original image resolution
+  const downloadCanvas = document.createElement("canvas");
+  const downloadCtx = downloadCanvas.getContext("2d");
+
+  const img = new Image ();
+  img.onload = () => {
+    downloadCanvas.width = img.width;
+    downloadCanvas.height = img.height;
+
+    // Draw the image at its original res
+    downloadCtx.drawImage(img, 0, 0, img.width, img.height);
+
+    // Add text on the high res canvas
+    downloadCtx.font = "50px sf pro";
+    downloadCtx.fillStyle = "white";
+    downloadCtx.fillText("Hello", 50, img.height - 50);
+
+    // Export the high res canvas as a PNG image
+    link.href = downloadCanvas.toDataURL("image/png");
+    link.download = "image.png";
+    link.click();
+  };
+  img.src = URL.createObjectURL(file);
+});
+
+// Add button functionality
+displayImageCanvas.addEventListener("click", () => {
+  console.log("ﾔｼﾞｭｾﾝﾊﾟｲｲｷｽｷﾞﾝｲｸｲｸｱｯｱｯｱｯｱｰﾔﾘﾏｽﾈ");
+});
+
+// if image height < width, then the text is 1/2 the size of when the image is height < width.
