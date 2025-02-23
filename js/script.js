@@ -160,7 +160,7 @@ uploadButton.addEventListener("change", (event) => {
       ctx.drawImage(img, 0, 0, newWidth, newHeight);
       ctx.fillStyle = "white";
 
-      base_image.src = 'others/apple_logo.png';
+      base_image.src = 'misc/apple_logo.png';
       base_image.onload = () => {
         redraw(img, exifData, base_image, ctx, newWidth, newHeight);
       };
@@ -236,7 +236,7 @@ document.querySelectorAll('input[name="displayLogo"]').forEach((radioButton) => 
 
       if (selectedOption === 'option-3') {
         console.log("Option 3 selected: Showing base image");
-        base_image.src = 'others/apple_logo.png';
+        base_image.src = 'misc/apple_logo.png';
         base_image.onload = () => {
           redraw(img, exifData, base_image, ctx, newWidth, newHeight); // Wait for base image to load
         };
